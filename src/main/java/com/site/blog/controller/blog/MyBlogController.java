@@ -35,10 +35,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * 博客前台
- *
- * @author Linn-cn
- * @date 2020/12/7
+ * 博客前台页面
  */
 @Controller
 public class MyBlogController {
@@ -60,14 +57,12 @@ public class MyBlogController {
     @Autowired
     private BlogCommentService blogCommentService;
 
-    @Autowired
-    private BlogLinkService blogLinkService;
+
 
     /**
-     * 博客首页
+     * 进入首页
      * @param request
-     * @author Linn-cn
-     * @date 2020/12/7
+     * @return
      */
     @GetMapping({"/", "/index", "index.html"})
     public String index(HttpServletRequest request) {
@@ -78,12 +73,10 @@ public class MyBlogController {
     }
 
     /**
-     * 分类
-     *
+     * 点击分类 搜索当前分类所有博客
      * @param request
      * @param categoryName
-     * @author Linn-cn
-     * @date 2020/12/7
+     * @return
      */
     @GetMapping({"/category/{categoryName}"})
     public String category(HttpServletRequest request, @PathVariable("categoryName") String categoryName) {
@@ -94,12 +87,10 @@ public class MyBlogController {
     }
 
     /**
-     * 搜索
-     *
+     * 根据关键字搜索
      * @param request
      * @param keyword
-     * @return java.lang.String
-     * @date 2019/9/6 7:03
+     * @return
      */
     @GetMapping({"/search/{keyword}"})
     public String search(HttpServletRequest request, @PathVariable("keyword") String keyword) {
@@ -111,12 +102,10 @@ public class MyBlogController {
     }
 
     /**
-     * 标签
-     *
+     * 点击标签 查询所有该标签的博客
      * @param request
      * @param tagId
-     * @return java.lang.String
-     * @date 2019/9/6 7:04
+     * @return
      */
     @GetMapping({"/tag/{tagId}"})
     public String tag(HttpServletRequest request, @PathVariable("tagId") String tagId) {
@@ -127,16 +116,14 @@ public class MyBlogController {
     }
 
     /**
-     * 博客分页
+     * 博客分页查询
      *
      * @param request
      * @param condition
-     * @throws
-     * @author Linn-cn
-     * @date 2020/12/7
      */
     @GetMapping({"/page"})
     public String page(HttpServletRequest request, BlogPageCondition condition) {
+        //如果是第一次进入首页 则显示第一页的内容 每页5条数据
         if (Objects.isNull(condition.getPageNum())) {
             condition.setPageNum(1);
         }
@@ -144,11 +131,13 @@ public class MyBlogController {
             condition.setPageSize(5);
         }
         Page<BlogInfo> page = new Page<>(condition.getPageNum(), condition.getPageSize());
+        //根据关键词模糊查询 博客种类 博客状态查询
         LambdaQueryWrapper<BlogInfo> sqlWrapper = Wrappers.<BlogInfo>lambdaQuery()
                 .like(Objects.nonNull(condition.getKeyword()), BlogInfo::getBlogTitle, condition.getKeyword())
                 .eq(Objects.nonNull(condition.getCategoryName()), BlogInfo::getBlogCategoryName, condition.getCategoryName())
                 .eq(BlogInfo::getBlogStatus, BlogStatusEnum.RELEASE.getStatus())
                 .eq(BlogInfo::getIsDeleted, DeleteStatusEnum.NO_DELETED.getStatus());
+        //根据标签查询
         if (Objects.nonNull(condition.getTagId())) {
             List<BlogTagRelation> list = blogTagRelationService.list(new QueryWrapper<BlogTagRelation>()
                     .lambda().eq(BlogTagRelation::getTagId, condition.getTagId()));
@@ -156,9 +145,13 @@ public class MyBlogController {
                 sqlWrapper.in(BlogInfo::getBlogId, list.stream().map(BlogTagRelation::getBlogId).toArray());
             }
         }
+        //根据发布博客时间降序
         sqlWrapper.orderByDesc(BlogInfo::getCreateTime);
         blogInfoService.page(page, sqlWrapper);
         PageResult blogPageResult = new PageResult(page.getRecords(), page.getTotal(), condition.getPageSize(), condition.getPageNum());
+
+
+        //设置 搜索关键词 标签id 文章种类名称的回显
         if (Objects.nonNull(condition.getKeyword())) {
             request.setAttribute("keyword", condition.getKeyword());
         }
@@ -168,30 +161,41 @@ public class MyBlogController {
         if (Objects.nonNull(condition.getCategoryName())) {
             request.setAttribute("categoryName", condition.getCategoryName());
         }
+        //搜索博客的主体内容
         request.setAttribute("blogPageResult", blogPageResult);
+
+
+        //页面的名称 显示在title
         request.setAttribute("pageName", condition.getPageName());
+
+
+        //热门标签 最新发布 点击最多
         request.setAttribute("newBlogs", blogInfoService.getNewBlog());
         request.setAttribute("hotBlogs", blogInfoService.getHotBlog());
         request.setAttribute("hotTags", blogTagService.getBlogTagCountForIndex());
+
+
+        //系统变量
         request.setAttribute("configurations", blogConfigService.getAllConfigs());
         return "blog/" + theme + "/index";
     }
 
     /**
-     * 文章详情
-     *
+     * 进入博客详情页面
      * @param request
      * @param blogId
-     * @return java.lang.String
-     * @date 2019/9/6 13:09
+     * @return
      */
     @GetMapping({"/blog/{blogId}", "/article/{blogId}"})
     public String detail(HttpServletRequest request, @PathVariable("blogId") Long blogId) {
         // 获得文章info
         BlogInfo blogInfo = blogInfoService.getById(blogId);
+        //获取博客所有关联的标签id
         List<BlogTagRelation> blogTagRelations = blogTagRelationService.list(new QueryWrapper<BlogTagRelation>()
                 .lambda()
                 .eq(BlogTagRelation::getBlogId, blogId));
+
+        //博客访问数+1
         blogInfoService.updateById(new BlogInfo()
                 .setBlogId(blogInfo.getBlogId())
                 .setBlogViews(blogInfo.getBlogViews() + 1));
@@ -246,32 +250,6 @@ public class MyBlogController {
         return ajaxResultPage;
     }
 
-    /**
-     * 友链界面
-     *
-     * @param request
-     * @return java.lang.String
-     * @date 2019/9/6 17:26
-     */
-    @GetMapping({"/link"})
-    public String link(HttpServletRequest request) {
-        request.setAttribute("pageName", "友情链接");
-        List<BlogLink> favoriteLinks = blogLinkService.list(new QueryWrapper<BlogLink>()
-                .lambda().eq(BlogLink::getLinkType, LinkConstants.LINK_TYPE_FRIENDSHIP.getLinkTypeId())
-        );
-        List<BlogLink> recommendLinks = blogLinkService.list(new QueryWrapper<BlogLink>()
-                .lambda().eq(BlogLink::getLinkType, LinkConstants.LINK_TYPE_RECOMMEND.getLinkTypeId())
-        );
-        List<BlogLink> personalLinks = blogLinkService.list(new QueryWrapper<BlogLink>()
-                .lambda().eq(BlogLink::getLinkType, LinkConstants.LINK_TYPE_PRIVATE.getLinkTypeId())
-        );
-        //判断友链类别并封装数据 0-友链 1-推荐 2-个人网站
-        request.setAttribute("favoriteLinks", favoriteLinks);
-        request.setAttribute("recommendLinks", recommendLinks);
-        request.setAttribute("personalLinks", personalLinks);
-        request.setAttribute("configurations", blogConfigService.getAllConfigs());
-        return "blog/" + theme + "/link";
-    }
 
     /**
      * 提交评论

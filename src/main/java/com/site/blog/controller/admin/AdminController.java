@@ -41,8 +41,7 @@ public class AdminController {
     private BlogCommentService blogCommentService;
     @Autowired
     private BlogConfigService blogConfigService;
-    @Autowired
-    private BlogLinkService blogLinkService;
+
 
 
     /**
@@ -118,10 +117,10 @@ public class AdminController {
     }
 
     /**
-     * @Description: 验证密码是否正确
-     * @Param: [oldPwd, session]
-     * @return: com.linn.blog.dto.Result
-     * @date: 2019/8/25 9:15
+     * 个人信息编辑修改密码时 验证旧密码
+     * @param oldPwd
+     * @param session
+     * @return
      */
     @ResponseBody
     @GetMapping("/v1/password")
@@ -147,10 +146,6 @@ public class AdminController {
         ));
         session.setAttribute("blogCount", blogInfoService.count(
                 new QueryWrapper<BlogInfo>().lambda().eq(BlogInfo::getIsDeleted,
-                        DeleteStatusEnum.NO_DELETED.getStatus())
-        ));
-        session.setAttribute("linkCount", blogLinkService.count(
-                new QueryWrapper<BlogLink>().lambda().eq(BlogLink::getIsDeleted,
                         DeleteStatusEnum.NO_DELETED.getStatus())
         ));
         session.setAttribute("tagCount", blogTagService.count(
@@ -203,10 +198,11 @@ public class AdminController {
     }
 
     /**
-     * @Description: 用户头像上传
-     * @Param: [httpServletRequest, file]
-     * @return: com.linn.blog.util.Result
-     * @date: 2019/8/24 15:15
+     * 管理员上传头像
+     * @param request
+     * @param file
+     * @return
+     * @throws URISyntaxException
      */
     @PostMapping({"/upload/authorImg"})
     @ResponseBody

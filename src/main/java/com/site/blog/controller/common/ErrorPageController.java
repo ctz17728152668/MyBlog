@@ -15,6 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * 发生异常后控制页面跳转到错误页面
+ */
 @Controller
 public class ErrorPageController implements ErrorController {
 

@@ -4,9 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * 前台博客分页条件
- * @author Linn-cn
- * @create 2020/12/07
+ * 前台博客分页查询条件
  */
 @Data
 @Accessors(chain = true)

@@ -13,14 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * <p>
- * 博客跟标签的关系表 服务实现类
- * </p>
- *
- * @author: 南街
- * @since 2019-08-28
- */
+
 @Service
 public class BlogTagRelationServiceImpl extends ServiceImpl<BlogTagRelationMapper, BlogTagRelation> implements BlogTagRelationService {
 

@@ -15,12 +15,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.*;
 
 /**
- * <p>
- * 评论信息表
- * </p>
- *
- * @author: 南街
- * @since 2019-09-04
+ * 评论信息
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

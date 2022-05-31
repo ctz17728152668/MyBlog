@@ -10,12 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 博客分类
- * </p>
- *
- * @author: 南街
- * @since 2019-08-30
+ * 文章分类
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

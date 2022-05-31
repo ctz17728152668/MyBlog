@@ -3,7 +3,7 @@ package com.site.blog.util;
 import java.security.MessageDigest;
 
 /**
- * md5加密
+ * 登录密码md5加密工具类
  */
 public class MD5Utils {
 

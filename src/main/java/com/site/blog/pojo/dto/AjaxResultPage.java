@@ -1,5 +1,7 @@
 package com.site.blog.pojo.dto;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import java.util.List;
  * 响应前台分页信息
  * @param <T>
  */
+@Data
 public class AjaxResultPage<T> implements Serializable {
 
     //状态码
@@ -21,45 +24,4 @@ public class AjaxResultPage<T> implements Serializable {
     //表格数据
     private transient List<T> data;
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public long getCount() {
-        return count;
-    }
-
-    public void setCount(long count) {
-        this.count = count;
-    }
-
-    public List<T> getData() {
-        return data;
-    }
-
-    public void setData(List<T> data) {
-        this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "AjaxResultPage{" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
-                ", count=" + count +
-                ", data=" + data +
-                '}';
-    }
 }

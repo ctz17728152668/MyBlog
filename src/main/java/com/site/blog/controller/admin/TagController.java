@@ -69,7 +69,7 @@ public class TagController {
     @GetMapping("/v1/tags/paging")
     public AjaxResultPage<BlogTag> getCategoryList(AjaxPutPage<BlogTag> ajaxPutPage, BlogTag condition){
         LambdaQueryWrapper<BlogTag> queryWrapper = new LambdaQueryWrapper<>(condition)
-                .eq(BlogTag::getTagId, DeleteStatusEnum.NO_DELETED.getStatus());
+                .eq(BlogTag::getIsDeleted, DeleteStatusEnum.NO_DELETED.getStatus());
 
         Page<BlogTag> page = ajaxPutPage.putPageToPage();
         blogTagService.page(page,queryWrapper);

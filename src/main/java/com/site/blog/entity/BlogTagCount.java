@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+/**
+ * 标签使用次数
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)

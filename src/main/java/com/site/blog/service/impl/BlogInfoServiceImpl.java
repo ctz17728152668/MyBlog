@@ -22,14 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * <p>
- * 博客信息表 服务实现类
- * </p>
- *
- * @author: 南街
- * @since 2019-08-27
- */
+
 @Service
 public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> implements BlogInfoService {
 

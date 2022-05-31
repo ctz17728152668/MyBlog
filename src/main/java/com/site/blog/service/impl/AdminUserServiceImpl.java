@@ -14,19 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-/**
- * <p>
- * 后台管理员信息表 服务实现类
- * </p>
- *
- * @author: 南街
- * @since 2019-08-25
- */
+
 @Service
 public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser> implements AdminUserService {
 
     @Autowired
-    private AdminUserMapper adminUserMappe;
+    private AdminUserMapper adminUserMapper;
 
     /**
      * @Description: 验证密码
@@ -40,13 +33,13 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
                 new AdminUser().setAdminUserId(userId)
                         .setLoginPassword(MD5Utils.MD5Encode(oldPwd, "UTF-8"))
         );
-        AdminUser adminUser = adminUserMappe.selectOne(queryWrapper);
+        AdminUser adminUser = adminUserMapper.selectOne(queryWrapper);
         return !StringUtils.isEmpty(adminUser);
     }
 
     @Transactional
     @Override
     public boolean updateUserInfo(AdminUser adminUser) {
-        return SqlHelper.retBool(adminUserMappe.updateById(adminUser));
+        return SqlHelper.retBool(adminUserMapper.updateById(adminUser));
     }
 }

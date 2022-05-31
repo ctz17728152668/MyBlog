@@ -57,29 +57,7 @@
                                     <cite th:text="${session.commentCount}"></cite></p>
                             </a>
                         </li>
-                        <li class="layui-col-md2 layui-col-xs6">
-                            <a href="javascript:;" class="x-admin-backlog-body">
-                                <h3>友情链接</h3>
-                                <p>
-                                    <cite th:text="${session.linkCount}"></cite></p>
-                            </a>
-                        </li>
                     </ul>
-                </div>
-            </div>
-        </div>
-        <div class="layui-col-md12">
-            <div class="layui-card">
-                <div class="layui-card-header">系统信息&开发团队</div>
-                <div class="layui-card-body ">
-                    <table class="layui-table">
-                        <tbody>
-                        <tr th:each="sysInfo:${session.sysList}">
-                            <th th:text="${sysInfo.configName}"></th>
-                            <td th:text="${sysInfo.configValue}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>

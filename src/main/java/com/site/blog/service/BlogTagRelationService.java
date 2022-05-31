@@ -9,11 +9,6 @@ import java.util.List;
 
 public interface BlogTagRelationService extends IService<BlogTagRelation> {
 
-    /**
-     * 移除博客原来的标签 并保存新的博客标签
-     * @param blogTagIds
-     * @param blogInfo
-     */
     void removeAndsaveBatch(List<Integer> blogTagIds, BlogInfo blogInfo);
 
 }

@@ -6,14 +6,7 @@ import com.site.blog.pojo.vo.SimpleBlogListVO;
 
 import java.util.List;
 
-/**
- * <p>
- * 博客信息表 服务类
- * </p>
- *
- * @author: 南街
- * @since 2019-08-27
- */
+
 public interface BlogInfoService extends IService<BlogInfo> {
 
     /**

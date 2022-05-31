@@ -22,22 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * <p>
- * 标签表 服务实现类
- * </p>
- *
- * @author: 南街
- * @since 2019-08-28
- */
+
 @Service
 public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> implements BlogTagService {
 
     @Autowired
     private BlogTagRelationService blogTagRelationService;
 
-    @Autowired
-    private BlogInfoMapper blogInfoMapper;
 
     @Autowired
     private BlogInfoService blogInfoService;

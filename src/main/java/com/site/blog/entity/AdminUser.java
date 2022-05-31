@@ -9,12 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 后台管理员信息表
- * </p>
- *
- * @author: 南街
- * @since 2019-08-25
+ * 管理员信息表
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

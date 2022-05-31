@@ -15,12 +15,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 博客信息表
- * </p>
- *
- * @author: 南街
- * @since 2019-08-27
+ * 博客主体信息
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
