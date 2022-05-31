@@ -195,11 +195,9 @@ public class BlogController {
     }
 
     /**
-     * 清除文章
-     *
+     * 从数据库清除文章
      * @param blogId
-     * @return com.site.blog.pojo.dto.Result
-     * @date 2019/8/29 14:02
+     * @return
      */
     @ResponseBody
     @PostMapping("/v1/blog/clear")

@@ -27,10 +27,8 @@ public class MyBlogWebMvcConfigurer implements WebMvcConfigurer {
     }
 
     /**
-     * @Description: 重写addResourceHandlers映射文件路径
-     * @Param: [registry]
-     * @return: void
-     * @date: 2019/8/7 9:06
+     * 静态路径映射
+     * @param registry
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

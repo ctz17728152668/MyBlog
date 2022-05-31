@@ -21,11 +21,7 @@ public class ApplicationControllerExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ApplicationControllerExceptionHandler.class);
 
-    /**
-     * 方法参数效验
-     *
-     * @date 2019/9/8 9:58
-     */
+
     @ExceptionHandler(value = BindException.class)
     @ResponseBody
     public Result<String> bindException(BindException ex) {
@@ -37,11 +33,7 @@ public class ApplicationControllerExceptionHandler {
     }
 
 
-    /**
-     * 方法参数效验
-     *
-     * @date 2019/9/8 9:58
-     */
+
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseBody
     public Result<String> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {

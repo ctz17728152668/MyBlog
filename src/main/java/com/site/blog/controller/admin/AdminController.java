@@ -190,6 +190,11 @@ public class AdminController {
     }
 
 
+    /**
+     * 刷新页面 判断session是否过期
+     * @param session
+     * @return
+     */
     @ResponseBody
     @GetMapping("/v1/reload")
     public boolean reload(HttpSession session){

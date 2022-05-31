@@ -19,6 +19,10 @@ public class BlogConfigServiceImpl extends ServiceImpl<BlogConfigMapper, BlogCon
     private BlogConfigMapper blogConfigMapper;
 
 
+    /**
+     * 获取所有系统变量
+     * @return
+     */
     @Override
     public Map<String, String> getAllConfigs() {
         List<BlogConfig> list = blogConfigMapper.selectList(null);

@@ -33,6 +33,10 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> impl
     @Autowired
     private BlogInfoService blogInfoService;
 
+    /**
+     * 获取所有被博客使用的标签以及使用次数
+     * @return
+     */
     @Override
     public List<BlogTagCount> getBlogTagCountForIndex() {
         QueryWrapper<BlogTag> queryWrapper = new QueryWrapper<>();
@@ -51,25 +55,38 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> impl
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 删除标签
+     * @param tagId
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean clearTag(Integer tagId) {
         LambdaQueryWrapper<BlogTagRelation> queryWrapper = Wrappers.<BlogTagRelation>lambdaQuery()
                 .eq(BlogTagRelation::getTagId,tagId);
         List<BlogTagRelation> tagRelationList = blogTagRelationService.list(queryWrapper);
-        // 批量更新的BlogInfo信息
+
+        // 获取所有使用该标签的博客
         List<BlogInfo> infoList = tagRelationList.stream()
                 .map(tagRelation -> new BlogInfo()
                         .setBlogId(tagRelation.getBlogId())
                         .setBlogTags(SysConfigConstants.DEFAULT_TAG.getConfigName())).collect(Collectors.toList());
         List<Long> blogIds = infoList.stream().map(BlogInfo::getBlogId).collect(Collectors.toList());
-        // 批量更新的tagRelation信息
+
+
+        // 改为默认标签
         List<BlogTagRelation> tagRelations = tagRelationList.stream()
                 .map(tagRelation -> new BlogTagRelation()
                         .setBlogId(tagRelation.getBlogId())
-                        .setTagId(Integer.valueOf(SysConfigConstants.DEFAULT_CATEGORY.getConfigField())))
+                        .setTagId(Integer.valueOf(SysConfigConstants.DEFAULT_TAG.getConfigField())))
                 .collect(Collectors.toList());
+
+
         blogInfoService.updateBatchById(infoList);
+
+
+        // 删除需要删除的标签
         blogTagRelationService.remove(new QueryWrapper<BlogTagRelation>()
                 .lambda()
                 .in(BlogTagRelation::getBlogId,blogIds));

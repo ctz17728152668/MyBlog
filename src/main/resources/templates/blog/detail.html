@@ -34,9 +34,9 @@
 
 </head>
 <body>
-<div th:replace="blog/amaze/header::nav-fragment"></div>
+<div th:replace="blog/header::nav-fragment"></div>
 <header th:fragment="header-fragment" class="intro-header"
-        th:style="'background-image:url(' + @{/blog/amaze/images/header.jpg} + ');'">
+        th:style="'background-image:url(' + @{/blog/amaze/images/header.png} + ');'">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -91,22 +91,10 @@
                     <input type="text" id="commentator" autocomplete="off" placeholder="必填,1-6个字符" class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">邮箱</label>
-                <div class="layui-input-block">
-                    <input type="text" id="email" autocomplete="off" placeholder="可不填" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">网站地址</label>
-                <div class="layui-input-block">
-                    <input type="text" id="websiteUrl" autocomplete="off" placeholder="可不填" class="layui-input">
-                </div>
-            </div>
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">评论内容</label>
                 <div class="layui-input-block">
-                    <textarea id="commentBody" placeholder="既然来了,不如说几句" class="layui-textarea"></textarea>
+                    <textarea id="commentBody" class="layui-textarea"></textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -114,7 +102,6 @@
             </div>
         </div>
     </th:block>
-    <p class="back-top" id="back-top" style="display:none"><a href="#top"><span></span></a></p>
 </div>
 </body>
 <script th:src="@{/blog/plugins/jquery/jquery.min.js}"></script>
@@ -211,8 +198,6 @@
         $('#commentSubmit').click(function (obj) {
             var blogId = $('#blogId').val();
             var commentator = $('#commentator').val();
-            var email = $('#email').val();
-            var websiteUrl = $('#websiteUrl').val();
             var commentBody = $('#commentBody').val();
             if (isNull(blogId)) {
                 layer.alert("参数异常",{icon: 5})
@@ -220,14 +205,6 @@
             }
             if (isNull(commentator)) {
                 layer.alert("请输入你的称呼",{icon: 5})
-                return;
-            }
-            if ((!isNull(email)) && !isEmail(email)) {
-                layer.alert("邮箱格式不正确",{icon: 5})
-                return;
-            }
-            if ((!isNull(websiteUrl)) && !isUrl(websiteUrl)) {
-                layer.alert("网站地址不正确",{icon: 5})
                 return;
             }
             if (!validCN_ENString2_100(commentator)) {

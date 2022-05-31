@@ -21,6 +21,11 @@ public class BlogTagRelationServiceImpl extends ServiceImpl<BlogTagRelationMappe
     private BlogTagRelationMapper blogTagRelationMapper;
 
 
+    /**
+     * 批量操作博客和标签的关系
+     * @param blogTagIds
+     * @param blogInfo
+     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void removeAndsaveBatch(List<Integer> blogTagIds, BlogInfo blogInfo) {

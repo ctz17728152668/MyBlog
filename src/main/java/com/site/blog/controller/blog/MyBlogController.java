@@ -40,7 +40,6 @@ import java.util.stream.Collectors;
 @Controller
 public class MyBlogController {
 
-    public static String theme = "amaze";
 
     @Autowired
     private BlogInfoService blogInfoService;
@@ -177,7 +176,7 @@ public class MyBlogController {
 
         //系统变量
         request.setAttribute("configurations", blogConfigService.getAllConfigs());
-        return "blog/" + theme + "/index";
+        return "blog/index";
     }
 
     /**
@@ -223,16 +222,14 @@ public class MyBlogController {
         request.setAttribute("tagList", tagList);
         request.setAttribute("pageName", "详情");
         request.setAttribute("configurations", blogConfigService.getAllConfigs());
-        return "blog/" + theme + "/detail";
+        return "blog/detail";
     }
 
     /**
-     * 评论列表
-     *
+     * 分页查询评论列表
      * @param ajaxPutPage
      * @param blogId
-     * @return com.site.blog.pojo.dto.AjaxResultPage<com.site.blog.entity.BlogComment>
-     * @date 2019/11/19 8:42
+     * @return
      */
     @GetMapping("/blog/listComment")
     @ResponseBody
@@ -252,21 +249,16 @@ public class MyBlogController {
 
 
     /**
-     * 提交评论
-     *
-     * @return com.site.blog.pojo.dto.Result
-     * @date 2019/9/6 17:40
+     * 评论博客
+     * @param request
+     * @param blogComment
+     * @return
      */
     @PostMapping(value = "/blog/comment")
     @ResponseBody
     public Result<String> comment(HttpServletRequest request,
                                   @Validated BlogComment blogComment) {
-        String ref = request.getHeader("Referer");
-        // 对非法字符进行转义，防止xss漏洞
-        blogComment.setCommentBody(StringEscapeUtils.escapeHtml4(blogComment.getCommentBody()));
-        if (StringUtils.isEmpty(ref)) {
-            return ResultGenerator.getResultByHttp(HttpStatusEnum.INTERNAL_SERVER_ERROR, "非法请求");
-        }
+        blogComment.setCommentBody(blogComment.getCommentBody());
         boolean flag = blogCommentService.save(blogComment);
         if (flag) {
             return ResultGenerator.getResultByHttp(HttpStatusEnum.OK);

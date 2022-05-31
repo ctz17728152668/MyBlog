@@ -1,6 +1,7 @@
 package com.site.blog.controller.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -58,7 +59,6 @@ public class ErrorPageController implements ErrorController {
         return new ResponseEntity<Map<String, Object>>(body, status);
     }
 
-    @Override
     public String getErrorPath() {
         return ERROR_PATH;
     }
@@ -74,7 +74,7 @@ public class ErrorPageController implements ErrorController {
 
     protected Map<String, Object> getErrorAttributes(HttpServletRequest request, boolean includeStackTrace) {
         WebRequest webRequest = new ServletWebRequest(request);
-        return this.errorAttributes.getErrorAttributes(webRequest, includeStackTrace);
+        return this.errorAttributes.getErrorAttributes(webRequest, ErrorAttributeOptions.defaults());
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {

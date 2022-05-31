@@ -140,7 +140,7 @@
         formSelects.data('tagId', 'server', {
             url: '/admin/v1/tags/list',
             success: function (id, url, searchVal, result) {
-
+                formSelects.value('tagId',[[${blogTags}]], true);
             }
         });
         formSelects.data('blogCategoryId', 'server', {

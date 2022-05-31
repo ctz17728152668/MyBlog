@@ -7,10 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * @qq交流群 796794009
- * @qq 1320291471
- * @Description: mybatis-plus配置
- * @create 2020/12/27
+ * mp分页插件配置类
  */
 @EnableTransactionManagement
 @Configuration

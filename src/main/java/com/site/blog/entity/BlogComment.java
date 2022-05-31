@@ -7,12 +7,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sun.istack.internal.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.*;
 
 /**
  * 评论信息
@@ -34,23 +33,18 @@ private static final long serialVersionUID=1L;
      * 关联的blog主键
      */
     @TableField("blog_id")
-    @NotNull(message = "非法请求")
-    @Min(value = 0,message = "非法请求")
     private Long blogId;
 
     /**
      * 评论者名称
      */
     @TableField("commentator")
-    @NotBlank(message = "请输入称呼")
-    @Length(min = 1,max = 6,message = "名称过长或过短")
     private String commentator;
 
     /**
      * 评论人的邮箱
      */
     @TableField("email")
-    @Email(message = "邮箱地址不合法")
     private String email;
 
     /**
@@ -63,8 +57,6 @@ private static final long serialVersionUID=1L;
      * 评论内容
      */
     @TableField("comment_body")
-    @NotBlank(message = "请输入评论内容")
-    @Length(min = 1,max = 200,message = "评论内容过长或过短")
     private String commentBody;
 
     /**

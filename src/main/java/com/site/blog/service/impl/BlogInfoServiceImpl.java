@@ -35,6 +35,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     @Autowired
     private BlogCommentMapper blogCommentMapper;
 
+
     @Override
     public List<SimpleBlogListVO> getNewBlog() {
         List<SimpleBlogListVO> simpleBlogListVOS = new ArrayList<>();
@@ -69,6 +70,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
         return simpleBlogListVOS;
     }
 
+    //
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean clearBlogInfo(Long blogId) {

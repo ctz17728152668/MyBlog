@@ -22,10 +22,10 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
     private AdminUserMapper adminUserMapper;
 
     /**
-     * @Description: 验证密码
-     * @Param: [userId, oldPwd]
-     * @return: boolean
-     * @date: 2019/8/26 13:27
+     * 修改密码时 验证旧密码是否正确
+     * @param userId
+     * @param oldPwd
+     * @return
      */
     @Override
     public boolean validatePassword(Integer userId, String oldPwd) {
@@ -37,6 +37,11 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         return !StringUtils.isEmpty(adminUser);
     }
 
+    /**
+     * 更新管理员信息 根据返回修改条数判断
+     * @param adminUser
+     * @return
+     */
     @Transactional
     @Override
     public boolean updateUserInfo(AdminUser adminUser) {
