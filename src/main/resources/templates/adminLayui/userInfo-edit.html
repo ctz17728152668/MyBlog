@@ -126,7 +126,7 @@
             oldPwd: function (value, item) {
                 var resultCode;
                 $.ajax({
-                    url: "/admin/v1/password",
+                    url: "/admin/password",
                     type: "GET",
                     async: false,       //关闭异步
                     data: {"oldPwd": value},
@@ -150,7 +150,7 @@
         form.on('submit(submit)', function (data) {
             console.log(data.field);
             $.ajax({
-                url: "/admin/v1/userInfo",
+                url: "/admin/userInfo",
                 type: "post",
                 data: data.field,
                 success: function (s) {

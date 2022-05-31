@@ -3,7 +3,7 @@
 <mapper namespace="com.site.blog.dao.BlogConfigMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.site.blog.entity.BlogConfig">
+    <resultMap id="BaseResultMap" type="com.c1z.blog.entity.BlogConfig">
         <id column="config_field" property="configField" />
         <result column="config_name" property="configName" />
         <result column="config_value" property="configValue" />

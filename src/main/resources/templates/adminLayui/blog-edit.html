@@ -102,7 +102,7 @@
             // 设置图片上传
             imageUpload: true,
             imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-            imageUploadURL: "/admin/v1/blog/uploadFile",
+            imageUploadURL: "/admin/blog/uploadFile",
             onload: function (obj) {
             }
         });
@@ -138,13 +138,13 @@
 
 
         formSelects.data('tagId', 'server', {
-            url: '/admin/v1/tags/list',
+            url: '/admin/tags/list',
             success: function (id, url, searchVal, result) {
                 formSelects.value('tagId',[[${blogTags}]], true);
             }
         });
         formSelects.data('blogCategoryId', 'server', {
-            url: '/admin/v1/category/list',
+            url: '/admin/category/list',
             success: function (id, url, searchVal, result) {
                 formSelects.value('blogCategoryId', blogCategoryIds, true);
             }
@@ -174,7 +174,7 @@
             var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
             console.log(datas);
             // 提交信息
-            $.post("/admin/v1/blog/edit", datas, function (s) {
+            $.post("/admin/blog/edit", datas, function (s) {
                 setTimeout(function () {
                     top.layer.close(index);
                     top.layer.alert(s.message);

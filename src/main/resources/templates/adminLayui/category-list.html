@@ -69,7 +69,7 @@
         var tableIns = table.render({
             elem: '#blogCategoryList',
             id: "blogCategoryTable",
-            url: '/admin/v1/category/paging',
+            url: '/admin/category/paging',
             title: '分类列表',
             page: true,
             height: "full-110",
@@ -106,7 +106,7 @@
                 ,data = obj.data //得到所在行所有键值
                 ,field = obj.field; //得到字段
             delete data['createTime'];
-            $.post("/admin/v1/category/update",data, function (s) {
+            $.post("/admin/category/update",data, function (s) {
                 layer.msg(s.message);
             });
         });
@@ -114,7 +114,7 @@
         form.on('switch(isDeleted)', function (data) {
             var isDeleted = data.elem.checked ? 1 : 0; //1为已删除,0为未删除
             var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
-            $.post("/admin/v1/category/isDel",
+            $.post("/admin/category/isDel",
                 {
                     "categoryId": data.value,
                     "isDeleted": isDeleted
@@ -131,7 +131,7 @@
         table.on('toolbar(blogCategoryList)', function(obj){
             switch(obj.event){
                 case 'addCategory':
-                    xadmin.open('信息添加','/admin/v1/category/add',450,250);
+                    xadmin.open('信息添加','/admin/category/add',450,250);
                     break;
             }
         });
@@ -143,7 +143,7 @@
 
             if (layEvent === 'clear') {
                 layer.confirm('确定清除？关联的文章分类信息将被清空',{icon:3, title:'提示信息'},function(index){
-                    $.post("/admin/v1/category/clear",
+                    $.post("/admin/category/clear",
                         {
                             "categoryId": data.categoryId
                         }, function (s) {
@@ -157,7 +157,7 @@
     });
 
     function reload(){
-        $.get("/admin/v1/reload",function(data){
+        $.get("/admin/reload",function(data){
             if (data){
                 location.reload();
             }else{

@@ -103,13 +103,13 @@
 
         //查询所有文章种类用于页面下拉框显示
         formSelects.data('blogCategoryId', 'server', {
-            url: '/admin/v1/category/list'
+            url: '/admin/category/list'
         });
 
         var tableIns = table.render({
             elem: '#blogList',
             id: "blogListTable",
-            url: '/admin/v1/blog/list',
+            url: '/admin/blog/list',
             title: '博客列表',
             //开启page后 每次访问url会根据分页栏 提交 limit（页面显示条数） 和 page（当前页码数） 两个参数
             page: true,
@@ -159,7 +159,7 @@
             //checked表示 鼠标点击元素后 为选中状态 则为发布状态
             var blogStatus = data.elem.checked ? 1 : 0; //获取修改后的状态
             var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
-            $.post("/admin/v1/blog/blogStatus",
+            $.post("/admin/blog/blogStatus",
                 {
                     "blogId": data.value,
                     "blogStatus": blogStatus
@@ -176,7 +176,7 @@
             //checked表示 鼠标点击元素后 为选中状态 则为允许评论状态
             var enableComment = data.elem.checked ? 1 : 0; //获取修改后的状态
             var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
-            $.post("/admin/v1/blog/blogStatus",
+            $.post("/admin/blog/blogStatus",
                 {
                     "blogId": data.value,
                     "enableComment": enableComment
@@ -197,7 +197,7 @@
             switch (layEvent) {
                 case 'del':
                     layer.confirm('确定删除此文章？', {icon: 3, title: '提示信息'}, function (index) {
-                        $.post("/admin/v1/blog/delete",
+                        $.post("/admin/blog/delete",
                             {
                                 "blogId": data.blogId
                             }, function (s) {
@@ -209,7 +209,7 @@
                     break;
                 case 'restore':
                     layer.confirm('确定还原此文章？', {icon: 3, title: '提示信息'}, function (index) {
-                        $.post("/admin/v1/blog/restore",
+                        $.post("/admin/blog/restore",
                             {
                                 "blogId": data.blogId
                             }, function (s) {
@@ -221,7 +221,7 @@
                     break;
                 case 'clear':
                     layer.confirm('确定从数据库中清除？', {icon: 3, title: '提示信息'}, function (index) {
-                        $.post("/admin/v1/blog/clear",
+                        $.post("/admin/blog/clear",
                             {
                                 "blogId": data.blogId
                             }, function (s) {
@@ -232,7 +232,7 @@
                     });
                     break;
                 case 'edit':
-                    location.href = "/admin/v1/blog/edit?blogId=" + data.blogId;
+                    location.href = "/admin/blog/edit?blogId=" + data.blogId;
                     break;
                 default:
                     break;
@@ -242,7 +242,7 @@
     //刷新按钮绑定事件
     function reload(){
         //判断当前session是否过期
-        $.get("/admin/v1/reload",function(data){
+        $.get("/admin/reload",function(data){
             if (data){
                 location.reload();
             }else{

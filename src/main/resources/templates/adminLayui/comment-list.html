@@ -91,13 +91,13 @@
         });
 
         formSelects.data('blogId', 'server', {
-            url: '/admin/v1/blog/select'
+            url: '/admin/blog/select'
         });
 
         var tableIns = table.render({
             elem: '#blogCommentList',
             id: "blogCommentTable",
-            url: '/admin/v1/comment/paging',
+            url: '/admin/comment/paging',
             title: '评论列表',
             page: true,
             height: "full-110",
@@ -106,7 +106,6 @@
             cols: [[
                 {type: 'checkbox'},
                 {field: 'commentator', title: '评论者名称', align: "center", unresize: "true"},
-                {field: 'email', title: '评论者邮箱', align: 'center', unresize: "true"},
                 {field: 'commentBody', title: '评论内容', align: 'center', unresize: "true",edit: "text"},
                 {field: 'commentCreateTime', title: '评论提交时间', align: 'center', unresize: "true"},
                 {field: 'commentStatus', title: '审核', align: 'center', unresize: "true", templet: '#isStatusTool'},
@@ -138,7 +137,7 @@
                 , field = obj.field; //得到字段
             delete data['commentCreateTime'];
             delete data['replyCreateTime'];
-            $.post("/admin/v1/comment/edit", data, function (s) {
+            $.post("/admin/comment/edit", data, function (s) {
                 layer.msg(s.message);
                 tableIns.reload();
             });
@@ -147,7 +146,7 @@
         form.on('switch(isDeleted)', function (data) {
             var isDeleted = data.elem.checked ? 1 : 0; //1为已删除,0为未删除
             var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
-            $.post("/admin/v1/comment/isDel",
+            $.post("/admin/comment/isDel",
                 {
                     "commentId": data.value,
                     "isDeleted": isDeleted
@@ -163,7 +162,7 @@
         form.on('switch(commentStatus)', function (data) {
             var commentStatus = data.elem.checked ? 1 : 0; //1为已审核,0为未审核
             var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
-            $.post("/admin/v1/comment/commentStatus",
+            $.post("/admin/comment/commentStatus",
                 {
                     "commentId": data.value,
                     "commentStatus": commentStatus
@@ -183,7 +182,7 @@
             switch (layEvent) {
                 case 'clear':
                     layer.confirm('确定从数据库中清除？', {icon: 3, title: '提示信息'}, function (index) {
-                        $.post("/admin/v1/comment/delete",
+                        $.post("/admin/comment/delete",
                             {
                                 "commentId": data.commentId
                             }, function (s) {
@@ -198,7 +197,7 @@
     });
 
     function reload() {
-        $.get("/admin/v1/reload", function (data) {
+        $.get("/admin/reload", function (data) {
             if (data) {
                 location.reload();
             } else {

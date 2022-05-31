@@ -16,7 +16,7 @@
         <!-- 顶部开始 -->
         <div class="container">
             <div class="logo">
-                <a href="./index">v1&nbsp;blog</a></div>
+                <a href="./index">MyBlog</a></div>
             <div class="left_open">
                 <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
             </div>
@@ -26,7 +26,7 @@
                     <dl class="layui-nav-child">
                         <!-- 二级菜单 -->
                         <dd>
-                            <a onclick="xadmin.open('个人信息','/admin/v1/userInfo',600,400)">个人信息</a></dd>
+                            <a onclick="xadmin.open('个人信息','/admin/userInfo',600,400)">个人信息</a></dd>
                         <dd>
                             <a href="logout">退出</a></dd>
                     </dl>
@@ -48,17 +48,17 @@
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('文章编辑','/admin/v1/blog/edit')">
+                                <a onclick="xadmin.add_tab('文章编辑','/admin/blog/edit')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>文章编辑</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('文章列表','/admin/v1/blog')">
+                                <a onclick="xadmin.add_tab('文章列表','/admin/blog')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>文章列表</cite></a>
                             </li>
                             <li>
-                                <a onclick="xadmin.add_tab('评论列表','/admin/v1/comment')">
+                                <a onclick="xadmin.add_tab('评论列表','/admin/comment')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>评论列表</cite></a>
                             </li>
@@ -71,7 +71,7 @@
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('标签列表','/admin/v1/tags')">
+                                <a onclick="xadmin.add_tab('标签列表','/admin/tags')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>标签列表</cite></a>
                             </li>
@@ -84,7 +84,7 @@
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('分类列表','/admin/v1/category')">
+                                <a onclick="xadmin.add_tab('分类列表','/admin/category')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>分类列表</cite></a>
                             </li>
@@ -112,7 +112,7 @@
                 </div>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        <iframe th:src='@{/admin/v1/welcome}' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                        <iframe th:src='@{/admin/welcome}' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
                     </div>
                 </div>
                 <div id="tab_show"></div>

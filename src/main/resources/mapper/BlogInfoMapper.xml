@@ -3,7 +3,7 @@
 <mapper namespace="com.site.blog.dao.BlogInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.site.blog.entity.BlogInfo">
+    <resultMap id="BaseResultMap" type="com.c1z.blog.entity.BlogInfo">
         <id column="blog_id" property="blogId" />
         <result column="blog_title" property="blogTitle" />
         <result column="blog_sub_url" property="blogSubUrl" />

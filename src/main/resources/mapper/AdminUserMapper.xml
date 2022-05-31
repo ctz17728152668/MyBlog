@@ -3,7 +3,7 @@
 <mapper namespace="com.site.blog.dao.AdminUserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.site.blog.entity.AdminUser">
+    <resultMap id="BaseResultMap" type="com.c1z.blog.entity.AdminUser">
         <id column="admin_user_id" property="adminUserId" />
         <result column="login_user_name" property="loginUserName" />
         <result column="login_password" property="loginPassword" />
