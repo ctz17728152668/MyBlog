@@ -3,7 +3,7 @@ package com.c1z.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.c1z.blog.entity.AdminUser;
-import com.c1z.blog.dao.AdminUserMapper;
+import com.c1z.blog.mapper.AdminUserMapper;
 import com.c1z.blog.service.AdminUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.c1z.blog.util.MD5Utils;

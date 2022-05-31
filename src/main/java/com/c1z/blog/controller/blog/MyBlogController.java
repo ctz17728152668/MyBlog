@@ -54,7 +54,8 @@ public class MyBlogController {
     @Autowired
     private BlogCommentService blogCommentService;
 
-
+    @Autowired
+    private BlogReplyService blogReplyService;
 
     /**
      * 进入首页
@@ -258,6 +259,21 @@ public class MyBlogController {
                                   @Validated BlogComment blogComment) {
         blogComment.setCommentBody(blogComment.getCommentBody());
         boolean flag = blogCommentService.save(blogComment);
+        if (flag) {
+            return ResultGenerator.getResultByHttp(HttpStatusEnum.OK);
+        }
+        return ResultGenerator.getResultByHttp(HttpStatusEnum.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * 回复评论
+     * @param reply
+     * @return
+     */
+    @PostMapping("/blog/reply")
+    @ResponseBody
+    public Result<String> reply(BlogReply reply){
+        boolean flag = blogReplyService.save(reply);
         if (flag) {
             return ResultGenerator.getResultByHttp(HttpStatusEnum.OK);
         }

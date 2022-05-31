@@ -1,7 +1,7 @@
 package com.c1z.blog.service.impl;
 
 import com.c1z.blog.entity.BlogConfig;
-import com.c1z.blog.dao.BlogConfigMapper;
+import com.c1z.blog.mapper.BlogConfigMapper;
 import com.c1z.blog.service.BlogConfigService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

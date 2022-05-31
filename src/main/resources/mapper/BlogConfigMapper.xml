@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.site.blog.dao.BlogConfigMapper">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.c1z.blog.mapper.BlogConfigMapper">
 
-    <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.c1z.blog.entity.BlogConfig">
-        <id column="config_field" property="configField" />
-        <result column="config_name" property="configName" />
-        <result column="config_value" property="configValue" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+            <id property="configField" column="config_field" jdbcType="VARCHAR"/>
+            <result property="configName" column="config_name" jdbcType="VARCHAR"/>
+            <result property="configValue" column="config_value" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        config_field, config_name, config_value, create_time, update_time
+        config_field,config_name,config_value,
+        create_time,update_time
     </sql>
-
 </mapper>

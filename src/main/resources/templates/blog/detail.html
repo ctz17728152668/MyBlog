@@ -114,11 +114,11 @@
 <script src="/X-admin/editormd/lib/flowchart.min.js"></script>
 <script src="/X-admin/editormd/lib/jquery.flowchart.min.js"></script>
 <script src="/X-admin/editormd/src/editormd.js"></script>
-
+<script th:src="@{/blog/plugins/jquery/jquery.min.js}"></script>
 <script th:src="@{/blog/plugins/comment/valid.js}"></script>
 <script th:src="@{/X-admin/lib/layui/layui.all.js}"></script>
 <script th:inline="javascript">
-    ;!function () {
+    !function () {
         var laypage = layui.laypage,
             layer = layui.layer,
             $ = layui.$;
@@ -153,9 +153,16 @@
                             var strVal = "";
                             Array.from(res.data).forEach((value) => {
                                 strVal += `<div class="cont">
+                                       <input type="hidden" value="${value.blogId}" name="blogId">
+                                       <button type="button" class="layui-btn data replyBtn" style="padding: 0px;margin-right: 30px;">
+                                             <i class="layui-icon layui-icon-reply-fill" style="font-size: 30px; margin: 0px"></i>
+                                       </button>
                                     <div class="img">
                                         <img src="/blog/amaze/images/wordImg.png" style="width:50px;" alt="">
-                                        <p class="tit"><span class="name">${value.commentator}</span><span class="data">${value.commentCreateTime}</span></p>
+                                        <p class="tit">
+                                        <span class="name">${value.commentator}</span>
+                                        <span class="data">${value.commentCreateTime}</span>
+                                        </p>
                                     </div>
                                     <div class="text">
                                         <p class="ct">${value.commentBody}</p>
@@ -175,6 +182,14 @@
                 }
             });
         }
+
+        $('#list-cont').on('click','.replyBtn',function() {
+            var val = $(this).parent().parent().siblings("input").val();
+
+            alert(val);
+        });
+
+
 
         $("#back-top").hide();
         $(window).scroll(function () {

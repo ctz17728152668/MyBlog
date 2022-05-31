@@ -1,11 +1,11 @@
 package com.c1z.blog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.c1z.blog.entity.BlogInfo;
 import com.c1z.blog.entity.BlogTagRelation;
-import com.c1z.blog.dao.BlogTagRelationMapper;
+import com.c1z.blog.mapper.BlogTagRelationMapper;
 import com.c1z.blog.service.BlogTagRelationService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

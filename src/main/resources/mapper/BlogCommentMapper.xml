@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.site.blog.dao.BlogCommentMapper">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.c1z.blog.mapper.BlogCommentMapper">
 
-    <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.c1z.blog.entity.BlogComment">
-        <id column="comment_id" property="commentId" />
-        <result column="blog_id" property="blogId" />
-        <result column="commentator" property="commentator" />
-        <result column="email" property="email" />
-        <result column="website_url" property="websiteUrl" />
-        <result column="comment_body" property="commentBody" />
-        <result column="comment_create_time" property="commentCreateTime" />
-        <result column="commentator_ip" property="commentatorIp" />
-        <result column="reply_body" property="replyBody" />
-        <result column="reply_create_time" property="replyCreateTime" />
-        <result column="comment_status" property="commentStatus" />
-        <result column="is_deleted" property="isDeleted" />
+            <id property="commentId" column="comment_id" jdbcType="BIGINT"/>
+            <result property="blogId" column="blog_id" jdbcType="BIGINT"/>
+            <result property="commentator" column="commentator" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="websiteUrl" column="website_url" jdbcType="VARCHAR"/>
+            <result property="commentBody" column="comment_body" jdbcType="VARCHAR"/>
+            <result property="commentCreateTime" column="comment_create_time" jdbcType="TIMESTAMP"/>
+            <result property="commentatorIp" column="commentator_ip" jdbcType="VARCHAR"/>
+            <result property="replyBody" column="reply_body" jdbcType="VARCHAR"/>
+            <result property="replyCreateTime" column="reply_create_time" jdbcType="TIMESTAMP"/>
+            <result property="commentStatus" column="comment_status" jdbcType="TINYINT"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
     </resultMap>
 
-    <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        comment_id, blog_id, commentator, email, website_url, comment_body, comment_create_time, commentator_ip, reply_body, reply_create_time, comment_status, is_deleted
+        comment_id,blog_id,commentator,
+        email,website_url,comment_body,
+        comment_create_time,commentator_ip,reply_body,
+        reply_create_time,comment_status,is_deleted
     </sql>
-
 </mapper>
