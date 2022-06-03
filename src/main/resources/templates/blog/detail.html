@@ -153,29 +153,47 @@
                             var strVal = "";
                             Array.from(res.data).forEach((value) => {
                                 strVal += `<div class="cont">
-                                       <input type="hidden" value="${value.blogId}" name="blogId">
-                                       <button type="button" class="layui-btn data replyBtn" style="padding: 0px;margin-right: 30px;">
+                                       <input type="hidden" value="${value.commentId}" name="commentId">
+
+                                    <div class="img">
+                                        <input type="hidden" value="${value.commentator}" name="toName">
+                                        <img src="/blog/amaze/images/wordImg.png" style="width:50px;" alt="">
+                                        <p class="tit"><span class="name">${value.commentator}</span><span class="data">${value.commentCreateTime}</span></p>
+                                        <button type="button" class="layui-btn data replyCBtn" style="padding: 0px;margin-right: 30px;" >
                                              <i class="layui-icon layui-icon-reply-fill" style="font-size: 30px; margin: 0px"></i>
                                        </button>
-                                    <div class="img">
-                                        <img src="/blog/amaze/images/wordImg.png" style="width:50px;" alt="">
-                                        <p class="tit">
-                                        <span class="name">${value.commentator}</span>
-                                        <span class="data">${value.commentCreateTime}</span>
-                                        </p>
                                     </div>
                                     <div class="text">
                                         <p class="ct">${value.commentBody}</p>
                                     </div>`;
-                                if (value.replyBody !== "" && value.replyBody != null) {
-                                    strVal += `<div class="cont" style="padding-left: 20px;">
+
+                                var strReply = "";
+                                //回复区开始
+                                Array.from(value.replyList).forEach((reply) =>{
+                                    strReply += `<div class="cont" style="padding-left: 20px; margin-bottom: 20px;">
                                       <div class="text">
-                                        <p class="tit"><span class="name">回复</span><span class="data">${value.replyCreateTime}</span></p>
-                                        <p class="ct">${value.replyBody}</p>
-                                      </div></div>`
-                                }
+                                        <input type="hidden" value="${value.commentator}" name="toName">
+                                        <p class="tit">${reply.fromName}  <span class="name">回复</span> ${reply.toName}<span class="data">${reply.replyCreateTime}</span></p>
+                                        <p class="ct" style="margin-bottom: 0px">${reply.replyBody}</p>
+                                        <button type="button" class="layui-btn data replyRBtn" style="padding: 0px;margin-right: 30px;" >
+                                             <i class="layui-icon layui-icon-reply-fill" style="font-size: 30px; margin: 0px"></i>
+                                       </button>
+                                      </div>
+
+                                      </div>`;
+                                })
+                                strVal+=strReply;
+
+
+
+
+
+                                //回复区结束
                                 strVal += `</div><hr/>`;
                             });
+
+
+
                             $("#list-cont").html(strVal);
                         }
                     );
@@ -183,10 +201,26 @@
             });
         }
 
-        $('#list-cont').on('click','.replyBtn',function() {
-            var val = $(this).parent().parent().siblings("input").val();
+        $('#list-cont').on('click','.replyCBtn',function() {
+            var blogId = $('#blogId').val();
+            var commentId = $(this).parent().siblings("input").val();
+            var commentator = $('#commentator').val();
+            var commentBody = $('#commentBody').val();
+            if(!verify(blogId,commentator,commentBody))
+                return;
+            var toName = $(this).siblings("input").val();
+            reply(blogId,commentId,commentator,toName,commentBody);
+        });
 
-            alert(val);
+        $('#list-cont').on('click','.replyRBtn',function() {
+            var blogId = $('#blogId').val();
+            var commentId = $(this).parent().parent().siblings("input").val();
+            var commentator = $('#commentator').val();
+            var commentBody = $('#commentBody').val();
+            if(!verify(blogId,commentator,commentBody))
+                return;
+            var toName = $(this).siblings("input").val();
+            reply(blogId,commentId,commentator,toName,commentBody);
         });
 
 
@@ -214,25 +248,12 @@
             var blogId = $('#blogId').val();
             var commentator = $('#commentator').val();
             var commentBody = $('#commentBody').val();
-            if (isNull(blogId)) {
-                layer.alert("参数异常",{icon: 5})
+            if(!verify(blogId,commentator,commentBody))
                 return;
-            }
-            if (isNull(commentator)) {
-                layer.alert("请输入你的称呼",{icon: 5})
-                return;
-            }
-            if (!validCN_ENString2_100(commentator)) {
-                layer.alert("请输入符合规范的名称(不要输入特殊字符)",{icon: 5})
-                return;
-            }
-            if (!validCN_ENString2_100(commentBody)) {
-                layer.alert("请输入符合规范的评论内容(不要输入特殊字符)",{icon: 5})
-                return;
-            }
             var data = {
-                "blogId": blogId, "commentator": commentator,
-                "email": email, "websiteUrl": websiteUrl, "commentBody": commentBody
+                "blogId": blogId,
+                "commentator": commentator,
+                "commentBody": commentBody
             };
             console.log(data);
             $.ajax({
@@ -254,5 +275,51 @@
             });
         });
     }();
+    function verify(blogId,commentator,commentBody) {
+        if (isNull(blogId)) {
+            layer.alert("参数异常",{icon: 5})
+            return false;
+        }
+        if (isNull(commentator)) {
+            layer.alert("请输入你的称呼",{icon: 5})
+            return false;
+        }
+        if (!validCN_ENString2_100(commentator)) {
+            layer.alert("请输入符合规范的名称(不要输入特殊字符)",{icon: 5})
+            return false;
+        }
+        if (!validCN_ENString2_100(commentBody)) {
+            layer.alert("请输入符合规范的评论内容(不要输入特殊字符)",{icon: 5})
+            return false;
+        }
+        return true;
+    }
+
+    function reply(blogId,commentId,fromName,toName,replyBody){
+        $.ajax({
+            url:'/blog/reply',
+            data:{
+                blogId:blogId,
+                commentId:commentId,
+                fromName:fromName,
+                toName:toName,
+                replyBody:replyBody
+            },
+            type:'post',
+            dataType:'json',
+            success: function (result) {
+                if (result.resultCode === 200) {
+                    layer.alert("回复提交成功请等待博主审核",{icon: 6})
+                    $('#commentBody').val('');
+                }
+                else {
+                    layer.alert(result.message,{icon: 5})
+                }
+            },
+            error: function () {
+                layer.alert("操作失败",{icon: 5})
+            }
+        })
+    }
 </script>
 </html>

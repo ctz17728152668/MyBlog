@@ -11,6 +11,7 @@ import com.c1z.blog.pojo.dto.AjaxPutPage;
 import com.c1z.blog.pojo.dto.AjaxResultPage;
 import com.c1z.blog.pojo.dto.BlogPageCondition;
 import com.c1z.blog.pojo.dto.Result;
+import com.c1z.blog.pojo.vo.BlogCommentVo;
 import com.c1z.blog.pojo.vo.BlogDetailVO;
 import com.c1z.blog.service.*;
 import com.c1z.blog.util.PageResult;
@@ -232,7 +233,7 @@ public class MyBlogController {
      */
     @GetMapping("/blog/listComment")
     @ResponseBody
-    public AjaxResultPage<BlogComment> listComment(AjaxPutPage<BlogComment> ajaxPutPage, Integer blogId) {
+    public AjaxResultPage<BlogCommentVo> listComment(AjaxPutPage<BlogComment> ajaxPutPage, Integer blogId) {
         Page<BlogComment> page = ajaxPutPage.putPageToPage();
         blogCommentService.page(page, new QueryWrapper<BlogComment>()
                 .lambda()
@@ -240,23 +241,37 @@ public class MyBlogController {
                 .eq(BlogComment::getCommentStatus, CommentStatusEnum.ALLOW.getStatus())
                 .eq(BlogComment::getIsDeleted, DeleteStatusEnum.NO_DELETED.getStatus())
                 .orderByDesc(BlogComment::getCommentCreateTime));
-        AjaxResultPage<BlogComment> ajaxResultPage = new AjaxResultPage<>();
+
+
+
+        AjaxResultPage<BlogCommentVo> ajaxResultPage = new AjaxResultPage<>();
+        List<BlogCommentVo> blogCommentVoList = new ArrayList<>();
+        List<BlogComment> commentList = page.getRecords();
+        LambdaQueryWrapper<BlogReply> queryWrapper;
+        BlogCommentVo blogCommentVo;
+        for(BlogComment comment:commentList){
+            blogCommentVo = new BlogCommentVo();
+            BeanUtils.copyProperties(comment,blogCommentVo);
+            queryWrapper = new LambdaQueryWrapper<BlogReply>().eq(BlogReply::getCommentId, blogCommentVo.getCommentId())
+                    .eq(BlogReply::getReplyStatus,BlogStatusEnum.RELEASE.getStatus());
+            blogCommentVo.setReplyList(blogReplyService.list(queryWrapper));
+            blogCommentVoList.add(blogCommentVo);
+        }
+
+
+
         ajaxResultPage.setCount(page.getTotal());
-        ajaxResultPage.setData(page.getRecords());
+        ajaxResultPage.setData(blogCommentVoList);
         return ajaxResultPage;
     }
 
-
     /**
      * 评论博客
-     * @param request
-     * @param blogComment
      * @return
      */
     @PostMapping(value = "/blog/comment")
     @ResponseBody
-    public Result<String> comment(HttpServletRequest request,
-                                  @Validated BlogComment blogComment) {
+    public Result<String> comment(@Validated BlogComment blogComment) {
         blogComment.setCommentBody(blogComment.getCommentBody());
         boolean flag = blogCommentService.save(blogComment);
         if (flag) {
@@ -272,7 +287,7 @@ public class MyBlogController {
      */
     @PostMapping("/blog/reply")
     @ResponseBody
-    public Result<String> reply(BlogReply reply){
+    public Result<String> reply(@Validated BlogReply reply){
         boolean flag = blogReplyService.save(reply);
         if (flag) {
             return ResultGenerator.getResultByHttp(HttpStatusEnum.OK);

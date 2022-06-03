@@ -3,17 +3,24 @@ package com.c1z.blog.controller.admin;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.c1z.blog.constants.HttpStatusEnum;
+import com.c1z.blog.mapper.BlogReplyMapper;
 import com.c1z.blog.pojo.dto.AjaxPutPage;
 import com.c1z.blog.pojo.dto.AjaxResultPage;
 import com.c1z.blog.pojo.dto.Result;
 import com.c1z.blog.entity.BlogComment;
+import com.c1z.blog.pojo.vo.BlogCommentVo;
 import com.c1z.blog.service.BlogCommentService;
+import com.c1z.blog.service.BlogReplyService;
 import com.c1z.blog.util.DateUtils;
 import com.c1z.blog.util.ResultGenerator;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 后台管理接口
@@ -23,8 +30,12 @@ import javax.annotation.Resource;
 @RequestMapping("/admin")
 public class CommentController {
 
-    @Resource
+    @Autowired
     private BlogCommentService blogCommentService;
+
+
+    @Autowired
+    private BlogReplyService blogReplyService;
 
     /**
      * 跳转进入评论页面
@@ -92,7 +103,6 @@ public class CommentController {
     @ResponseBody
     @PostMapping("/comment/edit")
     public Result<String> editComment(BlogComment blogComment){
-        blogComment.setReplyCreateTime(DateUtils.getLocalCurrentDate());
         blogComment.setCommentBody(blogComment.getCommentBody());
         boolean flag = blogCommentService.updateById(blogComment);
         if (flag){

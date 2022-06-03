@@ -24,7 +24,7 @@ mybatis-plus:
       table-prefix: "tb_"
 
 logging:
-  level.com.site.blog: debug
+  level.com.site.blog: info
 
 upload:
   uploadAuthorImg: "D:/tmp/myblog/authorImg/"

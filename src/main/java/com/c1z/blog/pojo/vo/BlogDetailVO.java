@@ -30,4 +30,6 @@ public class BlogDetailVO {
     private Integer enableComment;
 
     private Date createTime;
+
+
 }
