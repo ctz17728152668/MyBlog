@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.c1z.blog.mapper.BlogReplyMapper">
+
+    <resultMap id="BaseResultMap" type="com.c1z.blog.entity.BlogReply">
+            <id property="replyId" column="reply_id" jdbcType="INTEGER"/>
+            <result property="blogId" column="blog_id" jdbcType="INTEGER"/>
+            <result property="commentId" column="comment_id" jdbcType="INTEGER"/>
+            <result property="fromName" column="from_name" jdbcType="VARCHAR"/>
+            <result property="toName" column="to_name" jdbcType="VARCHAR"/>
+            <result property="replyBody" column="reply_body" jdbcType="VARCHAR"/>
+            <result property="replyCreateTime" column="reply_create_time" jdbcType="TIMESTAMP"/>
+            <result property="replyStatus" column="reply_status" jdbcType="TINYINT"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        reply_id,blog_id,comment_id,
+        from_name,to_name,reply_body,
+        reply_create_time,reply_status,is_deleted
+    </sql>
+</mapper>

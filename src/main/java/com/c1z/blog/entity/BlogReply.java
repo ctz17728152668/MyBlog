@@ -11,35 +11,39 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-/**
- * 博客跟标签的关系表
- * @TableName tb_blog_tag_relation
- */
-@TableName(value ="tb_blog_tag_relation")
+
+@TableName(value ="tb_blog_reply")
 @Data
 @Accessors(chain = true)
-public class BlogTagRelation implements Serializable {
-    /**
-     * 关系表id
-     */
-    @TableId(type = IdType.AUTO)
-    private Long relationId;
+public class BlogReply implements Serializable {
 
-    /**
-     * 博客id
-     */
-    private Long blogId;
+    @TableId(value = "reply_id",type = IdType.AUTO)
+    private Integer replyId;
 
-    /**
-     * 标签id
-     */
-    private Integer tagId;
 
-    /**
-     * 添加时间
-     */
+    private Integer blogId;
+
+
+    private Integer commentId;
+
+
+    private String fromName;
+
+
+    private String toName;
+
+
+    private String replyBody;
+
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+    private Date replyCreateTime;
+
+
+    private Integer replyStatus;
+
+
+    private Integer isDeleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
